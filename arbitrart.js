@@ -13,6 +13,8 @@
     previousBlue = 120;
     goingDown = false;
     colorGrid = [];
+    colorDiff = 4;
+
     drawPixel = function(x, y, r, g, b) {
       var index;
       index = (x + y * canvasWidth) * 4;
@@ -21,25 +23,29 @@
       canvasData.data[index + 2] = b;
       return canvasData.data[index + 3] = 255;
     };
+
     updateCanvas = function() {
       return ctx.putImageData(canvasData, 0, 0);
     };
+
     mutateColor = function(color) {
       while (rnd(100) < 50) {
         if (rnd(100) < 20) {
           goingDown = !goingDown;
         }
         if (goingDown) {
-          color = color - 3;
+          color = color - colorDiff;
         } else {
-          color = color + 3;
+          color = color + colorDiff;
         }
       }
       return color;
     };
+
     rnd = function(n) {
       return Math.floor(Math.random() * n);
     };
+
     nextColor = function(x, y, previousColor) {
       var color, left, up;
       if (y > 0) {
